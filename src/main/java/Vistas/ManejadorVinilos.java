@@ -1,6 +1,6 @@
 package Vistas;
 
-import Dominio.Colleccion;
+import Dominio.Coleccion;
 
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.awt.event.FocusListener;
 
 public class ManejadorVinilos extends JFrame implements ActionListener, FocusListener {
 
-    private Colleccion collection;
+    private Coleccion collection;
     private MetodossVinyl metodossVinyl;
     private JTextArea displayArea;
     private JTextField artistField, titleField, yearField, searchField;
@@ -37,7 +37,7 @@ public class ManejadorVinilos extends JFrame implements ActionListener, FocusLis
     private JLabel lblBuscarA;
 
     public ManejadorVinilos() {
-        collection = new Colleccion();
+        collection = new Coleccion();
         metodossVinyl = new MetodossVinyl();
     }
 

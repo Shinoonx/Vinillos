@@ -1,16 +1,16 @@
 package Vistas;
 
-import Dominio.Colleccion;
+import Dominio.Coleccion;
 import Dominio.Vinyl;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class MetodossVinyl {
-    private Colleccion collection;
+    private Coleccion collection;
 
     public MetodossVinyl() {
-        collection = new Colleccion();
+        collection = new Coleccion();
     }
 
     public void addVinyl(String artist, String title, int year, JTextArea displayArea, JLabel statusLabel, JTextField... fields) {
@@ -21,7 +21,7 @@ public class MetodossVinyl {
             return;
         }
         Vinyl vinyl = new Vinyl(artist, title, year);
-        if (collection.addVinyl(vinyl)) {
+        if (collection.agregarVinilo(vinyl)) {
             statusLabel.setText("Vinilo agregado exitosamente.");
             clearInputFields(fields);
         } else {
@@ -30,9 +30,9 @@ public class MetodossVinyl {
     }
 
     public void searchVinyl(String query, JTextArea displayArea, JLabel statusLabel) {
-        Vinyl result = collection.searchByArtist(query);
+        Vinyl result = collection.buscarPorArtista(query);
         if (result == null) {
-            result = collection.searchByTitle(query);
+            result = collection.buscarPorTitulo(query);
         }
         if (result != null) {
             displayArea.setText(result.toString());
@@ -44,8 +44,8 @@ public class MetodossVinyl {
     }
 
     public void removeVinyl(String query, JTextArea displayArea, JLabel statusLabel) {
-        Vinyl result = collection.searchByArtist(query);
-        if (result != null && collection.removeVinyl(result.getArtist(), result.getTitle())) {
+        Vinyl result = collection.buscarPorArtista(query);
+        if (result != null && collection.eliminarVinilo(result.getArtista(), result.getTitulo())) {
             statusLabel.setText("Vinilo eliminado.");
         } else {
             statusLabel.setText("No se encontró el vinilo para eliminar.");
@@ -53,17 +53,17 @@ public class MetodossVinyl {
     }
 
     public void showCount(JTextArea displayArea) {
-        int count = collection.getVinylCount();
+        int count = collection.obtenerCantidadVinilos();
         displayArea.setText("Total de vinilos: " + count);
     }
 
     public void showAvailableSpace(JTextArea displayArea) {
-        int space = collection.getAvailableSpace();
+        int space = collection.obtenerEspacioDisponible();
         displayArea.setText("Espacios disponibles: " + space);
     }
 
     public void showAllVinyls(JTextArea displayArea) {
-        ArrayList<Vinyl> vinyls = collection.getAllVinyls();
+        ArrayList<Vinyl> vinyls = collection.obtenerTodosVinilos();
         StringBuilder sb = new StringBuilder();
         for (Vinyl v : vinyls) {
             sb.append(v.toString()).append("\n");
