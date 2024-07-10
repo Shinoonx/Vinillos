@@ -2,6 +2,7 @@ package Vistas;
 
 import Dominio.Colleccion;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,12 @@ import java.awt.event.FocusListener;
 
 public class ManejadorVinilos extends JFrame implements ActionListener, FocusListener {
 
+    private Colleccion collection;
+    private MetodossVinyl metodossVinyl;
+    private JTextArea displayArea;
+    private JTextField artistField, titleField, yearField, searchField;
     private JLabel statusLabel;
+
     private JPanel jpVinyl;
     private JTextField txfAño;
     private JTextField txfTitulo;
@@ -29,18 +35,15 @@ public class ManejadorVinilos extends JFrame implements ActionListener, FocusLis
     private JLabel lblTitulo;
     private JLabel lblAño;
     private JLabel lblBuscarA;
-    private  MetodossVinyl  MetodossVinyl;
-    private Colleccion collection;
-
 
     public ManejadorVinilos() {
         collection = new Colleccion();
-        MetodossVinyl = new MetodossVinyl();
-
+        metodossVinyl = new MetodossVinyl();
     }
+
     public void PantallaAlbum() {
         setSize(600, 400);
-        setTitle("Vinillos");
+        setTitle("Vinilos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -56,22 +59,32 @@ public class ManejadorVinilos extends JFrame implements ActionListener, FocusLis
         btnconsultarCantidad.addActionListener(this);
         btnbuscarVInillo.addActionListener(this);
 
-        JPanel statusPanel = new JPanel();
-        statusPanel.setLayout(new BorderLayout());
-        statusPanel.setBorder(BorderFactory.createTitledBorder("Estado y Operaciones"));
-
         statusLabel = new JLabel(" ");
-        statusPanel.add(statusLabel, BorderLayout.NORTH);
-
+        JPanel statusPanel = new JPanel(new BorderLayout());
+        statusPanel.setBorder(BorderFactory.createTitledBorder("Estado y Operaciones"));
+        statusPanel.add(statusLabel, BorderLayout.CENTER);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MetodossVinyl metodossVinyl = new MetodossVinyl();
         if (e.getSource() == btnagragarVinilo) {
-            metodossVinyl.addVinyl(txfArtista.getText(), txfTitulo.getText(), Integer.parseInt(txfAño.getText()), txFdisplayArea, statusLabel, txfArtista, txfTitulo, txfAño);
+            String artista = txfArtista.getText();
+            String titulo = txfTitulo.getText();
+            String añoTexto = txfAño.getText();
+
+            if (artista.isEmpty() || titulo.isEmpty() || añoTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            try {
+                int año = Integer.parseInt(añoTexto);
+                metodossVinyl.addVinyl(artista, titulo, año, txFdisplayArea, statusLabel, txfArtista, txfTitulo, txfAño);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "El año debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (e.getSource() == btnbuscarVInillo) {
-            metodossVinyl.searchVinyl(txfBuscarPorArtista.getText(), txFdisplayArea,statusLabel);
+            metodossVinyl.searchVinyl(txfBuscarPorArtista.getText(), txFdisplayArea, statusLabel);
         } else if (e.getSource() == btneliminarVinilo) {
             metodossVinyl.removeVinyl(txfBuscarPorArtista.getText(), txFdisplayArea, statusLabel);
         } else if (e.getSource() == btnconsultarCantidad) {
@@ -83,16 +96,13 @@ public class ManejadorVinilos extends JFrame implements ActionListener, FocusLis
         } else if (e.getSource() == btnSalir) {
             System.exit(0);
         }
-
     }
 
     @Override
     public void focusGained(FocusEvent e) {
-
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-
     }
 }

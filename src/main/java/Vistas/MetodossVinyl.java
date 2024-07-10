@@ -4,20 +4,13 @@ import Dominio.Colleccion;
 import Dominio.Vinyl;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MetodossVinyl {
     private Colleccion collection;
-    private JTextArea displayArea;
-    private JTextField artistField, titleField, yearField, searchField;
-    private JLabel statusLabel;
 
     public MetodossVinyl() {
         collection = new Colleccion();
-
-
     }
 
     public void addVinyl(String artist, String title, int year, JTextArea displayArea, JLabel statusLabel, JTextField... fields) {
@@ -84,4 +77,3 @@ public class MetodossVinyl {
         }
     }
 }
-

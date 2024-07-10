@@ -1,30 +1,30 @@
 package Dominio;
 
 public class Vinyl {
-    private String artist;
-    private String title;
-    private int year;
+    private String Artista;
+    private String titulo;
+    private int anio;
 
     public Vinyl(String artist, String title, int year) {
-        this.artist = artist;
-        this.title = title;
-        this.year = year;
+        this.Artista = artist;
+        this.titulo = title;
+        this.anio = year;
     }
 
     public String getArtist() {
-        return artist;
+        return Artista;
     }
 
     public String getTitle() {
-        return title;
+        return titulo;
     }
 
     public int getYear() {
-        return year;
+        return anio;
     }
 
     @Override
     public String toString() {
-        return "Artista: " + artist + ", Título: " + title + ", Año: " + year;
+        return "Artista: " + Artista + ", Título: " + titulo + ", Año: " + anio;
     }
 }
